@@ -1,0 +1,5 @@
+{
+  "events": {
+    "start": "eslint --ignore-path .gitignore --ext .ts src/"
+  }
+}

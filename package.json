@@ -1,0 +1,39 @@
+{
+  "name": "verifiable-data-registry-server",
+  "version": "0.0.1",
+  "description": "A server-based implementation of verifiable data registry.",
+  "main": "src/app.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/app.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
+    "lint": "eslint --ignore-path .gitignore --ext .ts src/"
+  },
+  "keywords": [
+    "self-sovereign identity",
+    "verifiable data registry",
+    "decentralized identifiers",
+    "verifiable credentials"
+  ],
+  "author": "Yepeng Ding <yepengding@g.ecc.u-tokyo.ac.jp>",
+  "license": "Apache License 2.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "express": "^4.18.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^17.0.40",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "concurrently": "^7.2.1",
+    "eslint": "^8.17.0",
+    "nodemon": "^2.0.16",
+    "typescript": "^4.7.3"
+  }
+}
