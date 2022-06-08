@@ -66,7 +66,7 @@ class App {
 
         const spec = routingControllersToSpec(storage, {}, {
             components: {schemas},
-            info: {title: 'Express Best Practice API', version: '1.0.0'},
+            info: {title: 'Verifiable Data Registry API', version: '0.0.1'},
         })
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
     }

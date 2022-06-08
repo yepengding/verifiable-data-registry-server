@@ -50,7 +50,10 @@ export class ErrorHandler implements ExpressErrorMiddlewareInterface {
 
         next = () => {
             response.json(errResponse);
-            logger.error(error)
+            if (env.debug) {
+                console.error(error);
+            }
+            logger.error(error);
         }
         next();
     }
