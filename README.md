@@ -23,3 +23,7 @@ npm run build
 ```shell
 npm run start
 ```
+
+# API Document
+
+domain/api-docs
