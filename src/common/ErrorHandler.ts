@@ -12,6 +12,11 @@ type ErrResponse = {
     stack?: string
 }
 
+/**
+ * Global Error Handler
+ *
+ * @author Yepeng Ding
+ */
 @Middleware({type: 'after'})
 @Service()
 export class ErrorHandler implements ExpressErrorMiddlewareInterface {

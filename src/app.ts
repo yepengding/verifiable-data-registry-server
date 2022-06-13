@@ -13,6 +13,11 @@ import morgan from "morgan";
 import {logger, stream} from "./logger";
 import {ErrorHandler} from "./common/ErrorHandler";
 
+/**
+ * Entry Point
+ *
+ * @author Yepeng Ding
+ */
 class App {
     private app: Application
 

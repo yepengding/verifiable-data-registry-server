@@ -3,6 +3,8 @@ import {KeyPair} from "./KeyPair";
 
 /**
  * Decentralized Identifier
+ *
+ * @author Yepeng Ding
  */
 @Entity()
 export class DID {

@@ -13,7 +13,8 @@
     "self-sovereign identity",
     "verifiable data registry",
     "decentralized identifiers",
-    "verifiable credentials"
+    "verifiable credentials",
+    "JSON web"
   ],
   "author": "Yepeng Ding <yepengding@g.ecc.u-tokyo.ac.jp>",
   "license": "Apache License 2.0",

@@ -1,13 +1,11 @@
 import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm"
 import {DID} from "./DID";
 
-const es256Meta = {
-    kty: 'EC',
-    crv: 'P-256'
-}
 
 /**
  * ES256 Key Pair
+ *
+ * @author Yepeng Ding
  */
 @Entity()
 export class KeyPair {
@@ -40,4 +38,9 @@ export class KeyPair {
     static get crv() {
         return es256Meta.crv;
     }
+}
+
+const es256Meta = {
+    kty: 'EC',
+    crv: 'P-256'
 }

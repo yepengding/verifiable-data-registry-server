@@ -4,7 +4,7 @@ import {DID} from '../models/DID';
 
 /**
  * Decentralized Identifier Repository
+ *
+ * @author Yepeng Ding
  */
-export const DIDRepository = AppDataSource.getRepository(DID).extend({
-
-});
+export const DIDRepository = AppDataSource.getRepository(DID).extend({});

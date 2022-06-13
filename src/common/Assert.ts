@@ -1,3 +1,8 @@
+/**
+ * Assertion Tool
+ *
+ * @author Yepeng Ding
+ */
 export class Assert {
     public static notNull(object: unknown, message: string) {
         if (object === null || object === undefined) {

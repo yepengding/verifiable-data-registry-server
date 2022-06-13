@@ -6,6 +6,7 @@ import {KeyPair} from "../models/KeyPair";
 /**
  * Decentralized Identifier Service
  *
+ * @author Yepeng Ding
  */
 @Service()
 export class DIDService {

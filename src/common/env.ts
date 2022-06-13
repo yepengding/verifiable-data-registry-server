@@ -2,7 +2,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
+/**
+ * Environment Constants
+ *
+ * @author Yepeng Ding
+ */
 export const env = {
     node: {
         env: process.env.NODE_ENV || 'development'

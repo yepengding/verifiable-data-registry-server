@@ -17,6 +17,7 @@ export class CreateDIDBody {
 /**
  * Decentralized Identifier Controller
  *
+ * @author Yepeng Ding
  */
 @JsonController('/did')
 @Service()

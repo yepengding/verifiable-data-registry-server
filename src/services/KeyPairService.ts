@@ -7,6 +7,7 @@ import {KeyLike} from "jose";
 /**
  * ES256 Key Pair Service
  *
+ * @author Yepeng Ding
  */
 @Service()
 export class KeyPairService {
