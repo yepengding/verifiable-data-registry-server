@@ -1,5 +1,8 @@
 {
   "events": {
     "start": "eslint --ignore-path .gitignore --ext .ts src/"
+  },
+  "nodemonConfig": {
+    "delay": 2500
   }
 }

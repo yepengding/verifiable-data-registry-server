@@ -1,6 +1,7 @@
 import {Service} from 'typedi';
 import {DIDRepository} from "../repositories/DIDRepository";
 import {DID} from "../models/DID";
+import {KeyPair} from "../models/KeyPair";
 
 /**
  * Decentralized Identifier Service
@@ -17,9 +18,13 @@ export class DIDService {
         return await DIDRepository.findOneBy({id});
     }
 
-    public async create(did: DID): Promise<DID> {
-        if (did.id === '') {
-            did.id = this.computeId(did.method, did.methodIdentifier);
+    public async create(method: string, methodIdentifier: string, authenticationKeyPair: KeyPair): Promise<DID> {
+        const did: DID = {
+            id: this.computeId(method, methodIdentifier),
+            authentication: authenticationKeyPair.kid,
+            verificationMethod: [authenticationKeyPair],
+            method,
+            methodIdentifier
         }
         return await DIDRepository.save(did);
     }

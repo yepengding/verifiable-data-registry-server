@@ -3,6 +3,8 @@ import {DIDService} from "../services/DIDService";
 import {Service} from "typedi";
 import {IsNotEmpty} from "class-validator";
 import {Assert} from "../common/Assert";
+import * as jose from 'jose';
+import {KeyPairService} from "../services/KeyPairService";
 
 export class CreateDIDBody {
     @IsNotEmpty()
@@ -21,17 +23,18 @@ export class CreateDIDBody {
 export class DIDController {
 
     constructor(
-        private didService: DIDService
+        private didService: DIDService,
+        private keyPairService: KeyPairService
     ) {
     }
 
     @Get()
-    getAll() {
+    async getAll() {
         return this.didService.findAll();
     }
 
     @Get('/:id')
-    get(@Param('id') id: string) {
+    async get(@Param('id') id: string) {
         return this.didService.retrieve(id)
     }
 
@@ -40,7 +43,11 @@ export class DIDController {
         const id = this.didService.computeId(body.method, body.methodIdentifier);
         const exist = await this.didService.exists(id);
         Assert.isFalse(exist, `DID (${id}) exists.`);
-        return this.didService.create({...body, id: ''});
+        // Create authentication key (ES256)
+        const {publicKey, privateKey} = await jose.generateKeyPair('ES256');
+        const authenticationKeyPair = await this.keyPairService.create(publicKey, privateKey);
+
+        return this.didService.create(body.method, body.methodIdentifier, authenticationKeyPair);
     }
 
 }

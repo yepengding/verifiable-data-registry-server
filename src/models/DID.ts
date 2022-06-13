@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryColumn} from "typeorm"
+import {Column, Entity, OneToMany, PrimaryColumn} from "typeorm"
+import {KeyPair} from "./KeyPair";
 
 /**
  * Decentralized Identifier
@@ -14,5 +15,11 @@ export class DID {
 
     @Column()
     methodIdentifier: string
+
+    @Column()
+    authentication: string
+
+    @OneToMany(() => KeyPair, (keyPair: KeyPair) => keyPair.did)
+    verificationMethod: KeyPair[]
 
 }
