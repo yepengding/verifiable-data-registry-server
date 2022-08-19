@@ -2,7 +2,7 @@
 
 A server-based implementation of verifiable data registry.
 
-# Quickstart
+## Quickstart
 
 1. Install dependencies
 
@@ -15,15 +15,29 @@ yarn install
 3. Build project to `dist`
 
 ```shell
-npm run build
+yarn build
 ```
 
 4. Run project
 
 ```shell
-npm run start
+yarn start
 ```
 
-# API Document
+## Development
+
+- Run TypeScript compiler in watch mode
+
+```shell
+yarn watch
+```
+
+- Run dev server
+
+```shell
+yarn dev
+```
+
+## API Document
 
 domain/api-docs
