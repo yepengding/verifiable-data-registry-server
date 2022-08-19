@@ -11,7 +11,7 @@ import {routingControllersToSpec} from "routing-controllers-openapi";
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import morgan from "morgan";
 import {logger, stream} from "./logger";
-import {ErrorHandler} from "./common/ErrorHandler";
+import {ErrorHandler} from "./common/error-handling/ErrorHandler";
 
 /**
  * Entry Point
