@@ -71,7 +71,7 @@ class App {
 
         const spec = routingControllersToSpec(storage, {}, {
             components: {schemas},
-            info: {title: 'Verifiable Data Registry API', version: '0.0.1'},
+            info: {title: 'Verifiable Data Registry API', version: '0.0.2'},
         })
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
     }
