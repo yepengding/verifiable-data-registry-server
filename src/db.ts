@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
     username: env.db.username,
     password: env.db.password,
     database: env.db.database,
-    entities: [path.join(__dirname + '/models/*.js')],
+    entities: [path.join(__dirname + '/models/entities/*.js')],
     synchronize: env.db.synchronize,
     logging: env.db.logging,
     logger: env.db.logger as "advanced-console" | "simple-console" | "file" | "debug"

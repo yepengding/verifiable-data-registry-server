@@ -38,6 +38,7 @@ yarn watch
 yarn dev
 ```
 
-## API Document
+## GraphQL
 
-domain/api-docs
+domain/graphql
+

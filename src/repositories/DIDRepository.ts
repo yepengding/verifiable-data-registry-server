@@ -1,6 +1,6 @@
 import AppDataSource from "../db";
 
-import {DID} from '../models/DID';
+import {DID} from '../models/entities/DID';
 
 /**
  * Decentralized Identifier Repository
