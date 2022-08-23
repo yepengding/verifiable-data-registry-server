@@ -1,4 +1,4 @@
-import {Column, Entity, OneToMany, PrimaryColumn} from "typeorm"
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn} from "typeorm"
 import {KeyPair} from "./KeyPair";
 
 /**
@@ -20,6 +20,12 @@ export class DID {
 
     @Column()
     authentication: string
+
+    @CreateDateColumn()
+    createdAt?: Date
+
+    @UpdateDateColumn()
+    updatedAt?: Date
 
     @OneToMany(() => KeyPair, (keyPair: KeyPair) => keyPair.did)
     verificationMethod: KeyPair[]

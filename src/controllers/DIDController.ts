@@ -1,18 +1,12 @@
 import {Body, Get, JsonController, Param, Post} from 'routing-controllers';
 import {DIDService} from "../services/DIDService";
 import {Service} from "typedi";
-import {IsNotEmpty} from "class-validator";
-import {Assert} from "../common/Assert";
+import {Assert} from "../common/assertion/Assert";
 import * as jose from 'jose';
 import {KeyPairService} from "../services/KeyPairService";
+import {CreateDIDBody} from "../models/vo/req/DIDController";
+import {Response} from "../common/response/Response";
 
-export class CreateDIDBody {
-    @IsNotEmpty()
-    public method: string;
-
-    @IsNotEmpty()
-    public methodIdentifier: string;
-}
 
 /**
  * Decentralized Identifier Controller
@@ -36,7 +30,9 @@ export class DIDController {
 
     @Get('/:id')
     async get(@Param('id') id: string) {
-        return this.didService.retrieve(id)
+        const didDoc = await this.didService.retrieve(id);
+        Assert.notNull(didDoc, `DID (${id}) does not exist.`);
+        return Response.success(didDoc);
     }
 
     @Post()
@@ -48,7 +44,9 @@ export class DIDController {
         const {publicKey, privateKey} = await jose.generateKeyPair('ES256');
         const authenticationKeyPair = await this.keyPairService.create(publicKey, privateKey);
 
-        return this.didService.create(body.method, body.methodIdentifier, authenticationKeyPair);
+        const created = this.didService.create(body.method, body.methodIdentifier, authenticationKeyPair);
+
+        return Response.success(created);
     }
 
 }

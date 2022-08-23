@@ -11,7 +11,7 @@ import {routingControllersToSpec} from "routing-controllers-openapi";
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import morgan from "morgan";
 import {logger, stream} from "./logger";
-import {ErrorHandler} from "./common/ErrorHandler";
+import {ErrorHandler} from "./common/error-handling/ErrorHandler";
 
 /**
  * Entry Point
@@ -71,7 +71,7 @@ class App {
 
         const spec = routingControllersToSpec(storage, {}, {
             components: {schemas},
-            info: {title: 'Verifiable Data Registry API', version: '0.0.1'},
+            info: {title: 'Verifiable Data Registry API', version: '0.0.2'},
         })
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
     }

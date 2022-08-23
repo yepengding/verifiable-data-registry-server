@@ -34,6 +34,12 @@ export class DIDService {
         return await this.retrieve(id).then(did => did !== null)
     }
 
+    /**
+     * Compute DID
+     *
+     * @param method method
+     * @param methodIdentifier method identifier
+     */
     public computeId(method: string, methodIdentifier: string): string {
         return `did:${method}:${methodIdentifier}`;
     }

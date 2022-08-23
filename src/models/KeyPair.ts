@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm"
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, UpdateDateColumn} from "typeorm"
 import {DID} from "./DID";
 
 
@@ -27,6 +27,12 @@ export class KeyPair {
 
     @Column()
     pkcs8: string
+
+    @CreateDateColumn()
+    createdAt?: Date
+
+    @UpdateDateColumn()
+    updatedAt?: Date
 
     @ManyToOne(() => DID, (did: DID) => did.verificationMethod)
     did: DID
