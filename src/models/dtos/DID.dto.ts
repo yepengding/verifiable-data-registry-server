@@ -1,14 +1,18 @@
 import {DID} from "../entities/DID";
-import {Field, InputType} from "type-graphql";
+import {Field, InputType, ObjectType} from "type-graphql";
 import {IsNotEmpty, MaxLength} from "class-validator";
 
 /**
- * Create DID DTO
+ * DID DTOs
  *
  * @author Yepeng Ding
  */
+
+/**
+ * Create DID Request
+ */
 @InputType()
-export class CreateDID implements Partial<DID> {
+export class CreateDIDReq implements Partial<DID> {
 
     @Field()
     @IsNotEmpty()
@@ -19,5 +23,19 @@ export class CreateDID implements Partial<DID> {
     @IsNotEmpty()
     @MaxLength(55)
     methodIdentifier: string
+
+}
+
+/**
+ * Create DID Response
+ */
+@ObjectType()
+export class CreateDIDRes {
+
+    @Field()
+    did: string
+
+    @Field()
+    authenticationPrivateKey: string
 
 }

@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn} from "typeorm"
-import {KeyPair} from "./KeyPair";
+import {PublicKey} from "./PublicKey";
 import {Field, ObjectType} from "type-graphql";
 
 /**
@@ -35,8 +35,8 @@ export class DID {
     @UpdateDateColumn()
     updatedAt?: Date
 
-    @Field(() => [KeyPair])
-    @OneToMany(() => KeyPair, (keyPair: KeyPair) => keyPair.did)
-    verificationMethod: KeyPair[]
+    @Field(() => [PublicKey])
+    @OneToMany(() => PublicKey, (publicKey: PublicKey) => publicKey.did)
+    verificationMethod: PublicKey[]
 
 }

@@ -1,7 +1,7 @@
 import {Arg, Mutation, Query, Resolver} from 'type-graphql';
-import {CreateDID} from "../models/dtos/DID.dto";
+import {CreateDIDReq, CreateDIDRes} from "../models/dtos/DID.dto";
 import {DIDService} from "../services/DIDService";
-import {KeyPairService} from "../services/KeyPairService";
+import {PublicKeyService} from "../services/PublicKeyService";
 import {DID} from "../models/entities/DID";
 import {Assert} from "../common/assertion/Assert";
 import * as jose from 'jose';
@@ -18,7 +18,7 @@ export class DIDResolver {
 
     constructor(
         private readonly didService: DIDService,
-        private readonly keyPairService: KeyPairService
+        private readonly publicKeyService: PublicKeyService
     ) {
     }
 
@@ -38,19 +38,23 @@ export class DIDResolver {
         return didDoc;
     }
 
-    @Mutation(() => DID, {
+    @Mutation(() => CreateDIDRes, {
         description: 'Create DID',
     })
-    async createDID(@Arg('did') did: CreateDID): Promise<DID> {
+    async createDID(@Arg('did') did: CreateDIDReq): Promise<CreateDIDRes> {
         const id = this.didService.computeId(did.method, did.methodIdentifier);
         const exist = await this.didService.exists(id);
         Assert.isFalse(exist, `DID (${id}) exists.`);
 
         // Create authentication key (ES256)
-        const {publicKey, privateKey} = await jose.generateKeyPair('ES256');
-        const authenticationKeyPair = await this.keyPairService.create(publicKey, privateKey);
+        const algorithm = 'ES256';
+        const {publicKey, privateKey} = await jose.generateKeyPair(algorithm);
+        const authenticationPublicKey = await this.publicKeyService.create(publicKey, algorithm);
 
-        return this.didService.create(did.method, did.methodIdentifier, authenticationKeyPair);
+        return {
+            did: (await this.didService.create(did.method, did.methodIdentifier, authenticationPublicKey)).id,
+            authenticationPrivateKey: JSON.stringify(await jose.exportJWK(privateKey))
+        };
     }
 
 }
