@@ -1,6 +1,6 @@
 import {Service} from 'typedi';
 import {KeyPairRepository} from "../repositories/KeyPairRepository";
-import {KeyPair} from "../models/KeyPair";
+import {KeyPair} from "../models/entities/KeyPair";
 import * as jose from "jose";
 import {KeyLike} from "jose";
 

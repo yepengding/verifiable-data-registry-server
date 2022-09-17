@@ -1,6 +1,6 @@
 {
   "name": "verifiable-data-registry-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A server-based implementation of verifiable data registry.",
   "main": "src/app.ts",
   "scripts": {
@@ -20,7 +20,8 @@
   "author": "Yepeng Ding <yepengding@g.ecc.u-tokyo.ac.jp>",
   "license": "Apache License 2.0",
   "dependencies": {
-    "@types/json-schema": "^7.0.11",
+    "apollo-server-core": "^3.10.1",
+    "apollo-server-express": "^3.10.1",
     "body-parser": "^1.20.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
@@ -29,6 +30,7 @@
     "dotenv": "^16.0.1",
     "eslint-config-prettier": "^8.5.0",
     "express": "^4.18.1",
+    "graphql": "^15.7.2",
     "jose": "^4.9.0",
     "json-schema": "^0.4.0",
     "morgan": "^1.10.0",
@@ -36,8 +38,7 @@
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.9.0",
-    "routing-controllers-openapi": "^3.1.0",
-    "swagger-ui-express": "^4.5.0",
+    "type-graphql": "^1.1.1",
     "typedi": "^0.10.0",
     "typeorm": "^0.3.7",
     "winston": "^3.8.1",
@@ -47,6 +48,7 @@
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/json-schema": "^7.0.11",
     "@types/morgan": "^1.9.3",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.7.6",

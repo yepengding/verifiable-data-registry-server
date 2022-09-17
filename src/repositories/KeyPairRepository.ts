@@ -1,5 +1,5 @@
 import AppDataSource from "../db";
-import {KeyPair} from "../models/KeyPair";
+import {KeyPair} from "../models/entities/KeyPair";
 
 /**
  * ES256 Key Pair Repository

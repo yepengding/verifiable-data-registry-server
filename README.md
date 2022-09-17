@@ -38,6 +38,14 @@ yarn watch
 yarn dev
 ```
 
-## API Document
+## GraphQL
 
-domain/api-docs
+domain/graphql
+
+---
+
+# References
+
+- [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/)
+- [Decentralized Identifiers (DIDs) v1.0](https://www.w3.org/TR/did-core/)
+- [swift-express-graphql](https://github.com/yepengding/swift-express-graphql)

@@ -1,7 +1,7 @@
 import {Service} from 'typedi';
 import {DIDRepository} from "../repositories/DIDRepository";
-import {DID} from "../models/DID";
-import {KeyPair} from "../models/KeyPair";
+import {DID} from "../models/entities/DID";
+import {KeyPair} from "../models/entities/KeyPair";
 
 /**
  * Decentralized Identifier Service
@@ -12,11 +12,20 @@ import {KeyPair} from "../models/KeyPair";
 export class DIDService {
 
     public async findAll(): Promise<DID[]> {
-        return await DIDRepository.find();
+        return await DIDRepository.find({
+            relations: {
+                verificationMethod: true
+            }
+        });
     }
 
     public async retrieve(id: string): Promise<DID | null> {
-        return await DIDRepository.findOneBy({id});
+        return await DIDRepository.findOne({
+            where: {id},
+            relations: {
+                verificationMethod: true
+            }
+        });
     }
 
     public async create(method: string, methodIdentifier: string, authenticationKeyPair: KeyPair): Promise<DID> {
