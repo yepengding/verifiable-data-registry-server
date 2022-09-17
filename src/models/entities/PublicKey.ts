@@ -4,13 +4,13 @@ import {Field, ObjectType} from "type-graphql";
 
 
 /**
- * ES256 Key Pair
+ * Public Key (JWK)
  *
  * @author Yepeng Ding
  */
 @ObjectType()
 @Entity()
-export class KeyPair {
+export class PublicKey {
 
     @Field()
     @PrimaryColumn()
@@ -18,23 +18,11 @@ export class KeyPair {
 
     @Field()
     @Column()
-    x: string
+    jwk: string
 
     @Field()
     @Column()
-    y: string
-
-    @Field()
-    @Column()
-    d: string
-
-    @Field()
-    @Column()
-    spki: string
-
-    @Field()
-    @Column()
-    pkcs8: string
+    algorithm: string
 
     @Field()
     @CreateDateColumn()
@@ -48,16 +36,4 @@ export class KeyPair {
     @ManyToOne(() => DID, (did: DID) => did.verificationMethod)
     did: DID
 
-    static get kty() {
-        return es256Meta.kty;
-    }
-
-    static get crv() {
-        return es256Meta.crv;
-    }
-}
-
-const es256Meta = {
-    kty: 'EC',
-    crv: 'P-256'
 }
