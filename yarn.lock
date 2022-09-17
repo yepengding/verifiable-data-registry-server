@@ -2822,13 +2822,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.capitalize@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "lodash.capitalize@npm:4.2.1"
-  checksum: d9195f31d48c105206f1099946d8bbc8ab71435bc1c8708296992a31a992bb901baf120fdcadd773098ac96e62a79e6b023ee7d26a2deb0d6c6aada930e6ad0a
-  languageName: node
-  linkType: hard
-
 "lodash.get@npm:^4.4.2":
   version: 4.4.2
   resolution: "lodash.get@npm:4.4.2"
@@ -2854,13 +2847,6 @@ __metadata:
   version: 4.7.0
   resolution: "lodash.sortby@npm:4.7.0"
   checksum: db170c9396d29d11fe9a9f25668c4993e0c1331bcb941ddbd48fb76f492e732add7f2a47cfdf8e9d740fa59ac41bbfaf931d268bc72aab3ab49e9f89354d718c
-  languageName: node
-  linkType: hard
-
-"lodash.startcase@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "lodash.startcase@npm:4.4.0"
-  checksum: c03a4a784aca653845fe09d0ef67c902b6e49288dc45f542a4ab345a9c406a6dc194c774423fa313ee7b06283950301c1221dd2a1d8ecb2dac8dfbb9ed5606b5
   languageName: node
   linkType: hard
 
@@ -3414,7 +3400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openapi3-ts@npm:^2.0.0, openapi3-ts@npm:^2.0.1":
+"openapi3-ts@npm:^2.0.0":
   version: 2.0.2
   resolution: "openapi3-ts@npm:2.0.2"
   dependencies:
@@ -3537,13 +3523,6 @@ __metadata:
   dependencies:
     isarray: 0.0.1
   checksum: 709f6f083c0552514ef4780cb2e7e4cf49b0cc89a97439f2b7cc69a608982b7690fb5d1720a7473a59806508fc2dae0be751ba49f495ecf89fd8fbc62abccbcd
-  languageName: node
-  linkType: hard
-
-"path-to-regexp@npm:^2.2.1":
-  version: 2.4.0
-  resolution: "path-to-regexp@npm:2.4.0"
-  checksum: 581175bf2968e51452f2b8c71f10e75c995693668b4ecf7d0b48962fbe0c56830661ca5dd5fd6d8e2f0cc9a045ce07e89af504ab133e1d21887c2712df85b1f4
   languageName: node
   linkType: hard
 
@@ -3771,23 +3750,6 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
-  languageName: node
-  linkType: hard
-
-"routing-controllers-openapi@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "routing-controllers-openapi@npm:3.1.0"
-  dependencies:
-    lodash.capitalize: ^4.2.1
-    lodash.merge: ^4.6.2
-    lodash.startcase: ^4.4.0
-    openapi3-ts: ^2.0.1
-    path-to-regexp: ^2.2.1
-    reflect-metadata: ^0.1.13
-    tslib: ^2.1.0
-  peerDependencies:
-    routing-controllers: ^0.9.0
-  checksum: 4c237651aeb0b698f92cbd7ac2ae7f16dffe33c497333ee0da8f5e407516ba9b831257d5ae9b38f968bb17dd5c33460c0ddebfa0737b5df4bbe8b1184ce7db26
   languageName: node
   linkType: hard
 
@@ -4198,24 +4160,6 @@ __metadata:
   dependencies:
     has-flag: ^4.0.0
   checksum: c052193a7e43c6cdc741eb7f378df605636e01ad434badf7324f17fb60c69a880d8d8fcdcb562cf94c2350e57b937d7425ab5b8326c67c2adc48f7c87c1db406
-  languageName: node
-  linkType: hard
-
-"swagger-ui-dist@npm:>=4.11.0":
-  version: 4.12.0
-  resolution: "swagger-ui-dist@npm:4.12.0"
-  checksum: 24d1ac0590dd09f77fa6fa237620a5fef41e3a14614f15dfbac5e3dc6891b4a6083aa6ae8325fcec7ac35ed8b783541c9d15ba3ec813639ea751d84cae3846a7
-  languageName: node
-  linkType: hard
-
-"swagger-ui-express@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "swagger-ui-express@npm:4.5.0"
-  dependencies:
-    swagger-ui-dist: ">=4.11.0"
-  peerDependencies:
-    express: ">=4.0.0"
-  checksum: 67f1725bceea2142554f57b50e7ac03acb55f20f893da5a68bc806d4fec6b5dffa1b59e3aba09ac0e50f049f3719f71290afee556a0957e11ee13a27e652816d
   languageName: node
   linkType: hard
 
@@ -4659,8 +4603,6 @@ __metadata:
     nodemon: ^2.0.19
     reflect-metadata: ^0.1.13
     routing-controllers: ^0.9.0
-    routing-controllers-openapi: ^3.1.0
-    swagger-ui-express: ^4.5.0
     type-graphql: ^1.1.1
     typedi: ^0.10.0
     typeorm: ^0.3.7
