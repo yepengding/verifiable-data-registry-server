@@ -22,13 +22,6 @@ export class DIDResolver {
     ) {
     }
 
-    @Query(() => [DID], {
-        description: 'Get DID list',
-    })
-    async getDIDs(): Promise<DID[]> {
-        return this.didService.findAll();
-    }
-
     @Query(() => DIDDoc, {
         description: 'Resolve DID',
     })
