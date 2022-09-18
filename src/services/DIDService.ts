@@ -84,7 +84,7 @@ export class DIDService {
         // Only one authentication is supported currently.
         didDoc.authentication = [`${did.id}#${did.authentication}`];
 
-        didDoc.context = ["https://www.w3.org/ns/did/v1"];
+        didDoc.context = ContextUtil.defaultContextOfDID();
         didDoc.context.push(
             ...did.verificationMethod
                 // Map to type (Only JWK is supported currently)

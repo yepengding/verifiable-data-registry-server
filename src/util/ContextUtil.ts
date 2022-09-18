@@ -5,6 +5,10 @@
  */
 export class ContextUtil {
 
+    public static defaultContextOfDID(): [string] {
+        return ["https://www.w3.org/ns/did/v1"];
+    }
+
     /**
      * Get context of a given key type.
      *
