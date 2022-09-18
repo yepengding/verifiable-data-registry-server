@@ -39,6 +39,25 @@ export class CreateDIDRes {
 }
 
 /**
+ * Verification Method
+ *
+ */
+@ObjectType()
+export class VerificationMethod {
+    @Field()
+    id: string
+
+    @Field()
+    type: string
+
+    @Field()
+    controller: string
+
+    @Field(() => ES256PublicKey)
+    publicKeyJwk: ES256PublicKey
+}
+
+/**
  * DID Document
  *
  */
@@ -59,21 +78,3 @@ export class DIDDoc {
 
 }
 
-/**
- * Verification Method
- *
- */
-@ObjectType()
-export class VerificationMethod {
-    @Field()
-    id: string
-
-    @Field()
-    type: string
-
-    @Field()
-    controller: string
-
-    @Field(() => ES256PublicKey)
-    publicKeyJwk: ES256PublicKey
-}
