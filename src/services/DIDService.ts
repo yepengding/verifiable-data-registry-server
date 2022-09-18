@@ -2,6 +2,9 @@ import {Service} from 'typedi';
 import {DIDRepository} from "../repositories/DIDRepository";
 import {DID} from "../models/entities/DID";
 import {PublicKey} from "../models/entities/PublicKey";
+import {DIDDoc} from "../models/dtos/DID.dto";
+import {ContextUtil} from "../util/ContextUtil";
+import {ES256PublicKey} from "../models/dtos/PublicKey.dto";
 
 /**
  * Decentralized Identifier Service
@@ -68,6 +71,42 @@ export class DIDService {
      */
     public computeId(method: string, methodIdentifier: string): string {
         return `did:${method}:${methodIdentifier}`;
+    }
+
+    /**
+     * Resolve DID to DID Document
+     *
+     * @param did
+     */
+    public resolveDIDToDoc(did: DID): DIDDoc {
+        const didDoc = new DIDDoc();
+        didDoc.id = did.id;
+        // Only one authentication is supported currently.
+        didDoc.authentication = [`${did.id}#${did.authentication}`];
+
+        didDoc.context = ["https://www.w3.org/ns/did/v1"];
+        didDoc.context.push(
+            ...did.verificationMethod
+                // Map to type (Only JWK is supported currently)
+                .map(() => "JsonWebKey2020")
+                // Filter unique types
+                .filter((v, i, a) => a.indexOf(v) === i)
+                // Map to contexts
+                .map(t => ContextUtil.contextOfKeyType(t))
+        );
+
+        // Only JWK is supported currently
+        didDoc.verificationMethod = []
+        for (const m of did.verificationMethod) {
+            didDoc.verificationMethod.push({
+                id: `${did.id}#${m.kid}`,
+                type: "JsonWebKey2020",
+                controller: did.id,
+                publicKeyJwk: JSON.parse(m.jwk) as ES256PublicKey
+            })
+        }
+
+        return didDoc;
     }
 
 }

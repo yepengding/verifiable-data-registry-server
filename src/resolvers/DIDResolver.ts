@@ -1,5 +1,5 @@
 import {Arg, Mutation, Query, Resolver} from 'type-graphql';
-import {CreateDIDReq, CreateDIDRes} from "../models/dtos/DID.dto";
+import {CreateDIDReq, CreateDIDRes, DIDDoc} from "../models/dtos/DID.dto";
 import {DIDService} from "../services/DIDService";
 import {PublicKeyService} from "../services/PublicKeyService";
 import {DID} from "../models/entities/DID";
@@ -29,13 +29,13 @@ export class DIDResolver {
         return this.didService.findAll();
     }
 
-    @Query(() => DID, {
-        description: 'Get DID by id',
+    @Query(() => DIDDoc, {
+        description: 'Resolve DID',
     })
-    async getDID(@Arg('id') id: string): Promise<DID | null> {
-        const didDoc = await this.didService.retrieve(id);
-        Assert.notNull(didDoc, `DID (${id}) does not exist.`);
-        return didDoc;
+    async resolveDID(@Arg('id') id: string): Promise<DIDDoc> {
+        const did = await this.didService.retrieve(id);
+        Assert.notNull(did, `DID (${id}) does not exist.`);
+        return this.didService.resolveDIDToDoc(<DID>did);
     }
 
     @Mutation(() => CreateDIDRes, {
@@ -43,8 +43,7 @@ export class DIDResolver {
     })
     async createDID(@Arg('did') did: CreateDIDReq): Promise<CreateDIDRes> {
         const id = this.didService.computeId(did.method, did.methodIdentifier);
-        const exist = await this.didService.exists(id);
-        Assert.isFalse(exist, `DID (${id}) exists.`);
+        Assert.isFalse(await this.didService.exists(id), `DID (${id}) exists.`);
 
         // Create authentication key (ES256)
         const algorithm = 'ES256';
