@@ -42,11 +42,13 @@ export class DIDService {
      * @param method
      * @param methodIdentifier
      * @param authenticationKey
+     * @param assertionPublicKey
      */
-    public async create(method: string, methodIdentifier: string, authenticationKey: PublicKey): Promise<DID> {
+    public async create(method: string, methodIdentifier: string, authenticationKey: PublicKey, assertionPublicKey: PublicKey): Promise<DID> {
         const did: DID = {
             id: this.computeId(method, methodIdentifier),
             authentication: authenticationKey.kid,
+            assertionMethod: assertionPublicKey.kid,
             verificationMethod: [authenticationKey],
             method,
             methodIdentifier

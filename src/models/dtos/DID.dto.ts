@@ -36,6 +36,8 @@ export class CreateDIDRes {
     @Field()
     authenticationPrivateKey: string
 
+    @Field()
+    assertionMethodPrivateKey: string
 }
 
 /**
