@@ -6,6 +6,7 @@ import {ES256PublicKey} from "./PublicKey.dto";
 
 /**
  * Create DID Request
+ *
  */
 @InputType()
 export class CreateDIDReq implements Partial<DID> {
@@ -24,6 +25,7 @@ export class CreateDIDReq implements Partial<DID> {
 
 /**
  * Create DID Response
+ *
  */
 @ObjectType()
 export class CreateDIDRes {
@@ -34,8 +36,14 @@ export class CreateDIDRes {
     @Field()
     authenticationPrivateKey: string
 
+    @Field()
+    assertionMethodPrivateKey: string
 }
 
+/**
+ * Verification Method
+ *
+ */
 @ObjectType()
 export class VerificationMethod {
     @Field()

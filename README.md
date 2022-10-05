@@ -5,9 +5,10 @@ It mainly uses Javascript Object Signing and Encryption (JOSE) for DID and deriv
 
 ## Cryptographic Algorithm
 
-| Functionality      | Algorithm |
-|--------------------|-----------|
-| DID Authentication | ES256     |
+| Functionality    | Algorithm | Curve    |
+|------------------|-----------|----------|
+| Authentication   | ES256     | P-256    |
+| Assertion Method | EdDSA     | Ed25519  |
 
 ## Quickstart
 

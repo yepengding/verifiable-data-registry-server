@@ -1,3 +1,8 @@
+/**
+ * Response Encapsulation
+ *
+ * @author Yepeng Ding
+ */
 export class Response<T> {
 
     private code: number;

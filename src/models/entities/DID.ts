@@ -28,6 +28,10 @@ export class DID {
     authentication: string
 
     @Field()
+    @Column()
+    assertionMethod: string
+
+    @Field()
     @CreateDateColumn()
     createdAt?: Date
 

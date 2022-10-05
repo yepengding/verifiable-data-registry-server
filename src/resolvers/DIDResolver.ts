@@ -22,13 +22,6 @@ export class DIDResolver {
     ) {
     }
 
-    @Query(() => [DID], {
-        description: 'Get DID list',
-    })
-    async getDIDs(): Promise<DID[]> {
-        return this.didService.findAll();
-    }
-
     @Query(() => DIDDoc, {
         description: 'Resolve DID',
     })
@@ -45,14 +38,20 @@ export class DIDResolver {
         const id = this.didService.computeId(did.method, did.methodIdentifier);
         Assert.isFalse(await this.didService.exists(id), `DID (${id}) exists.`);
 
-        // Create authentication key (ES256)
-        const algorithm = 'ES256';
-        const {publicKey, privateKey} = await jose.generateKeyPair(algorithm);
-        const authenticationPublicKey = await this.publicKeyService.create(publicKey, algorithm);
+        // Create authentication key (ES256 [P-256])
+        const authAlgorithm = 'ES256';
+        const authKey = await jose.generateKeyPair(authAlgorithm);
+        const authenticationPublicKey = await this.publicKeyService.create(authKey.publicKey, authAlgorithm);
+
+        // Create assertion key (EdDSA [Ed25519])
+        const assertAlgorithm = 'EdDSA';
+        const assertKey = await jose.generateKeyPair(assertAlgorithm, {crv: "Ed25519"});
+        const assertionPublicKey = await this.publicKeyService.create(assertKey.publicKey, assertAlgorithm);
 
         return {
-            did: (await this.didService.create(did.method, did.methodIdentifier, authenticationPublicKey)).id,
-            authenticationPrivateKey: JSON.stringify(await jose.exportJWK(privateKey))
+            did: (await this.didService.create(did.method, did.methodIdentifier, authenticationPublicKey,assertionPublicKey)).id,
+            authenticationPrivateKey: JSON.stringify(await jose.exportJWK(authKey.privateKey)),
+            assertionMethodPrivateKey: JSON.stringify(await jose.exportJWK(assertKey.privateKey))
         };
     }
 

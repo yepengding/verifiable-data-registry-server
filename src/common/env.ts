@@ -13,8 +13,9 @@ export const env = {
     },
     debug: process.env.NODE_ENV === 'development',
     app: {
+        domain: process.env.APP_DOMAIN || 'http://localhost',
         port: process.env.APP_PORT ? parseInt(process.env.APP_PORT) : 8000,
-        controllers: process.env.APP_CONTROLLER_PATH || ''
+        endpoint: `${process.env.APP_DOMAIN || 'http://localhost'}:${process.env.APP_PORT || 8000}`
     },
     log: {
         dir: process.env.LOG_DIR || 'log',

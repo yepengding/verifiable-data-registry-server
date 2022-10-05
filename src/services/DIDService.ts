@@ -42,11 +42,13 @@ export class DIDService {
      * @param method
      * @param methodIdentifier
      * @param authenticationKey
+     * @param assertionPublicKey
      */
-    public async create(method: string, methodIdentifier: string, authenticationKey: PublicKey): Promise<DID> {
+    public async create(method: string, methodIdentifier: string, authenticationKey: PublicKey, assertionPublicKey: PublicKey): Promise<DID> {
         const did: DID = {
             id: this.computeId(method, methodIdentifier),
             authentication: authenticationKey.kid,
+            assertionMethod: assertionPublicKey.kid,
             verificationMethod: [authenticationKey],
             method,
             methodIdentifier
@@ -84,7 +86,7 @@ export class DIDService {
         // Only one authentication is supported currently.
         didDoc.authentication = [`${did.id}#${did.authentication}`];
 
-        didDoc.context = ["https://www.w3.org/ns/did/v1"];
+        didDoc.context = ContextUtil.defaultContextOfDID();
         didDoc.context.push(
             ...did.verificationMethod
                 // Map to type (Only JWK is supported currently)

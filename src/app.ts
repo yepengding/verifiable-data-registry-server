@@ -9,9 +9,9 @@ import morgan from "morgan";
 import {logger, stream} from "./logger";
 import {ErrorHandler} from "./common/error-handling/ErrorHandler";
 import {buildSchema} from "type-graphql";
-import {DIDResolver} from "./resolvers/DIDResolver";
 import {ApolloServer} from "apollo-server-express";
 import {GraphQLError} from "graphql";
+import path from "path";
 
 /**
  * Entry Point
@@ -46,6 +46,7 @@ class App {
      * @private
      */
     private async initializeCore() {
+
         // Initialize logging
         this.app.use(morgan(env.log.format, {stream}));
 
@@ -59,7 +60,7 @@ class App {
         // Set and start Apollo server to enable GraphQL
         const schema = await buildSchema({
             container: Container,
-            resolvers: [DIDResolver],
+            resolvers: [path.join(__dirname, '/resolvers/*.{ts,js}')],
         });
 
         const apolloServer = new ApolloServer({
