@@ -1,5 +1,5 @@
 import {Service} from 'typedi';
-import {PublicKeyRepository} from "../repositories/PublicKeyRepository";
+import {getPublicKeyRepository} from "../repositories/PublicKeyRepository";
 import {PublicKey} from "../models/entities/PublicKey";
 import * as jose from "jose";
 import {KeyLike} from "jose";
@@ -13,11 +13,11 @@ import {KeyLike} from "jose";
 export class PublicKeyService {
 
     public async findAll(): Promise<PublicKey[]> {
-        return await PublicKeyRepository.find();
+        return (await getPublicKeyRepository()).find();
     }
 
     public async retrieve(kid: string): Promise<PublicKey | null> {
-        return await PublicKeyRepository.findOneBy({kid});
+        return (await getPublicKeyRepository()).findOneBy({kid});
     }
 
     /**
@@ -34,7 +34,7 @@ export class PublicKeyService {
         key.jwk = JSON.stringify(publicJwk);
         key.algorithm = algorithm;
 
-        return await PublicKeyRepository.save(key);
+        return (await getPublicKeyRepository()).save(key);
     }
 
 }

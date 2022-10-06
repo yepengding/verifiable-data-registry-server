@@ -1,4 +1,4 @@
-import AppDataSource from "../db";
+import {getAppDataSource} from "../db";
 import {PublicKey} from "../models/entities/PublicKey";
 
 /**
@@ -6,4 +6,7 @@ import {PublicKey} from "../models/entities/PublicKey";
  *
  * @author Yepeng Ding
  */
-export const PublicKeyRepository = AppDataSource.getRepository(PublicKey).extend({});
+export const getPublicKeyRepository = async () => {
+    const dataSource = await getAppDataSource();
+    return dataSource.getRepository(PublicKey).extend({});
+}
