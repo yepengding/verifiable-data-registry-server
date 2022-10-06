@@ -1,5 +1,5 @@
 import {Service} from 'typedi';
-import {DIDRepository} from "../repositories/DIDRepository";
+import {getDIDRepository} from "../repositories/DIDRepository";
 import {DID} from "../models/entities/DID";
 import {PublicKey} from "../models/entities/PublicKey";
 import {DIDDoc} from "../models/dtos/DID.dto";
@@ -15,7 +15,7 @@ import {ES256PublicKey} from "../models/dtos/PublicKey.dto";
 export class DIDService {
 
     public async findAll(): Promise<DID[]> {
-        return await DIDRepository.find({
+        return (await getDIDRepository()).find({
             relations: {
                 verificationMethod: true
             }
@@ -28,7 +28,7 @@ export class DIDService {
      * @param id
      */
     public async retrieve(id: string): Promise<DID | null> {
-        return await DIDRepository.findOne({
+        return (await getDIDRepository()).findOne({
             where: {id},
             relations: {
                 verificationMethod: true
@@ -53,7 +53,7 @@ export class DIDService {
             method,
             methodIdentifier
         }
-        return await DIDRepository.save(did);
+        return (await getDIDRepository()).save(did);
     }
 
     /**

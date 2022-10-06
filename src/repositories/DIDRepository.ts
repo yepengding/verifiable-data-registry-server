@@ -1,4 +1,4 @@
-import AppDataSource from "../db";
+import {getAppDataSource} from "../db";
 
 import {DID} from '../models/entities/DID';
 
@@ -7,4 +7,7 @@ import {DID} from '../models/entities/DID';
  *
  * @author Yepeng Ding
  */
-export const DIDRepository = AppDataSource.getRepository(DID).extend({});
+export const getDIDRepository = async () => {
+    const dataSource = await getAppDataSource();
+    return dataSource.getRepository(DID).extend({});
+}
