@@ -19,7 +19,7 @@ export class PublicKeyResolver {
     }
 
     @Query(() => PublicKey, {
-        description: 'Resolve Public Key',
+        description: 'Resolve public key.',
     })
     async resolvePublicKey(@Arg('kid') kid: string): Promise<PublicKey | null> {
         const pk = await this.publicKeyService.retrieve(kid);
