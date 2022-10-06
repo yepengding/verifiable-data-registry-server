@@ -6,6 +6,7 @@ import * as process from "process";
 describe('DID GraphQL tests', () => {
 
     let server: http.Server;
+    const serverAddress = "http://localhost:8000";
 
     before(() => {
         const app = new App();
@@ -38,12 +39,12 @@ describe('DID GraphQL tests', () => {
                         }`
         };
 
-        await request("http://localhost:8000/graphql")
+        await request(`${serverAddress}/graphql`)
             .post("/")
             .send(mutationData)
             .expect('Content-Type', /json/)
             .expect(200)
-            .then(res => console.log(res.text));
+            .then(res => console.log(res.body));
     });
 
     it('should resolve DID', async () => {
@@ -69,16 +70,16 @@ describe('DID GraphQL tests', () => {
                       }
                     }`,
             variables: `{
-                          "resolveDidId": "did:test:0001"
+                          "resolveDidId": "${did}"
                         }`
         };
 
-        await request("http://localhost:8000/graphql")
+        await request(`${serverAddress}/graphql`)
             .post("/")
             .send(queryData)
             .expect('Content-Type', /json/)
             .expect(200)
-            .then(res => console.log(res.text));
+            .then(res => console.log(res.body));
     });
 
 

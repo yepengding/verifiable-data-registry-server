@@ -9,12 +9,18 @@ describe('Key tests', () => {
         const {publicKey, privateKey} = await jose.generateKeyPair(assertAlgorithm, {crv: "Ed25519"});
 
         // Stringify keys
-        const pkJwkStr = JSON.stringify(await jose.exportJWK(publicKey));
+        const pkJwk = await jose.exportJWK(publicKey);
+        const pkJwkStr = JSON.stringify(pkJwk);
         const skJwkStr = JSON.stringify(await jose.exportJWK(privateKey));
+
+        // Calculate kid
+        const kid = await jose.calculateJwkThumbprint(pkJwk);
 
         expect(pkJwkStr).to.be.a("string");
         expect(skJwkStr).to.be.a("string");
+        expect(kid).to.be.a("string");
 
+        console.log(kid);
         console.log(pkJwkStr);
         console.log(skJwkStr);
 
