@@ -13,10 +13,11 @@ describe('DID GraphQL tests', () => {
     })
 
     after(() => {
+        server.close();
         process.exit(0);
     })
 
-    it('Create DID', async () => {
+    it('should create DID', async () => {
         const method = "test";
         const methodIdentifier = "0001";
 
@@ -45,7 +46,7 @@ describe('DID GraphQL tests', () => {
             .then(res => console.log(res.text));
     });
 
-    it('Resolve DID', async () => {
+    it('should resolve DID', async () => {
         const did = "did:test:0001";
 
         const queryData = {
