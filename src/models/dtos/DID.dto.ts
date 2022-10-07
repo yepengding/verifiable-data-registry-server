@@ -8,15 +8,15 @@ import {ES256PublicKey} from "./PublicKey.dto";
  * Create DID Request
  *
  */
-@InputType()
+@InputType({description: "Create DID request."})
 export class CreateDIDReq implements Partial<DID> {
 
-    @Field()
+    @Field({description: "Method."})
     @IsNotEmpty()
     @MaxLength(55)
     method: string
 
-    @Field()
+    @Field({description: "Method identifier."})
     @IsNotEmpty()
     @MaxLength(55)
     methodIdentifier: string
@@ -27,16 +27,16 @@ export class CreateDIDReq implements Partial<DID> {
  * Create DID Response
  *
  */
-@ObjectType()
+@ObjectType({description: "Create DID response."})
 export class CreateDIDRes {
 
-    @Field()
+    @Field({description: "Decentralized identifier."})
     did: string
 
-    @Field()
+    @Field({description: "Private key for DID authentication"})
     authenticationPrivateKey: string
 
-    @Field()
+    @Field({description: "Private key for issuing VCs"})
     assertionMethodPrivateKey: string
 }
 
@@ -44,18 +44,18 @@ export class CreateDIDRes {
  * Verification Method
  *
  */
-@ObjectType()
+@ObjectType({description: "Verification method."})
 export class VerificationMethod {
-    @Field()
+    @Field({description: "Key identifier."})
     id: string
 
-    @Field()
+    @Field({description: "Key type."})
     type: string
 
-    @Field()
+    @Field({description: "Key controller DID"})
     controller: string
 
-    @Field(() => ES256PublicKey)
+    @Field(() => ES256PublicKey, {description: "Public key in JWK form"})
     publicKeyJwk: ES256PublicKey
 }
 
@@ -63,19 +63,19 @@ export class VerificationMethod {
  * DID Document
  *
  */
-@ObjectType()
+@ObjectType({description: "DID document."})
 export class DIDDoc {
 
-    @Field(() => [String])
+    @Field(() => [String], {description: "DID contexts."})
     context: string[]
 
-    @Field()
+    @Field({description: "Decentralized identifier."})
     id: string
 
-    @Field(() => [String])
+    @Field(() => [String], {description: "Authentication of DID subject."})
     authentication: [string]
 
-    @Field(() => [VerificationMethod])
+    @Field(() => [VerificationMethod], {description: "Verification for issued VCs."})
     verificationMethod: VerificationMethod[]
 
 }

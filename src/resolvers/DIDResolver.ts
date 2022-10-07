@@ -23,18 +23,20 @@ export class DIDResolver {
     }
 
     @Query(() => DIDDoc, {
-        description: 'Resolve DID',
+        description: 'Resolve DID.',
     })
-    async resolveDID(@Arg('id') id: string): Promise<DIDDoc> {
+    async resolveDID(@Arg('id', {description: "Decentralized identifier"}) id: string)
+        : Promise<DIDDoc> {
         const did = await this.didService.retrieve(id);
         Assert.notNull(did, `DID (${id}) does not exist.`);
         return this.didService.resolveDIDToDoc(<DID>did);
     }
 
     @Mutation(() => CreateDIDRes, {
-        description: 'Create DID',
+        description: 'Create DID.',
     })
-    async createDID(@Arg('did') did: CreateDIDReq): Promise<CreateDIDRes> {
+    async createDID(@Arg('did', {description: "Decentralized identifier object"}) did: CreateDIDReq)
+        : Promise<CreateDIDRes> {
         const id = this.didService.computeId(did.method, did.methodIdentifier);
         Assert.isFalse(await this.didService.exists(id), `DID (${id}) exists.`);
 
@@ -49,7 +51,7 @@ export class DIDResolver {
         const assertionPublicKey = await this.publicKeyService.create(assertKey.publicKey, assertAlgorithm);
 
         return {
-            did: (await this.didService.create(did.method, did.methodIdentifier, authenticationPublicKey,assertionPublicKey)).id,
+            did: (await this.didService.create(did.method, did.methodIdentifier, authenticationPublicKey, assertionPublicKey)).id,
             authenticationPrivateKey: JSON.stringify(await jose.exportJWK(authKey.privateKey)),
             assertionMethodPrivateKey: JSON.stringify(await jose.exportJWK(assertKey.privateKey))
         };

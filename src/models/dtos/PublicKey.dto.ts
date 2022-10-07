@@ -4,10 +4,10 @@ import {Field, ObjectType} from "type-graphql";
  * ES256 Public Key
  *
  */
-@ObjectType()
+@ObjectType({description: "Public key (ES256)."})
 export class ES256PublicKey {
 
-    @Field()
+    @Field({description: "Key type."})
     kty: string
 
     @Field()
@@ -16,7 +16,7 @@ export class ES256PublicKey {
     @Field()
     y: string
 
-    @Field()
+    @Field({description: "Key curve."})
     crv: string
 
 }
