@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import {createExpressServer, useContainer as routingUseContainer} from 'routing-controllers';
+import {createExpressServer, getMetadataArgsStorage, useContainer as routingUseContainer} from 'routing-controllers';
 import {Application} from "express";
 import {useContainer as classValidatorUseContainer} from 'class-validator';
 import {Container} from 'typedi';
@@ -12,6 +12,9 @@ import {buildSchema} from "type-graphql";
 import {ApolloServer} from "apollo-server-express";
 import {GraphQLError} from "graphql";
 import path from "path";
+import * as swaggerUi from 'swagger-ui-express';
+import {validationMetadatasToSchemas} from "class-validator-jsonschema";
+import {routingControllersToSpec} from "routing-controllers-openapi";
 
 /**
  * Application
@@ -26,10 +29,12 @@ export class App {
         this.app = createExpressServer({
             cors: true,
             classTransformer: true,
+            controllers: [path.join(__dirname + '/controllers/*.{ts,js}')],
             middlewares: [ErrorHandler],
             defaultErrorHandler: false
         });
         void this.initializeCore();
+        void this.initializeSwagger();
     }
 
     /**
@@ -58,6 +63,23 @@ export class App {
             fallback: true,
             fallbackOnErrors: true
         });
+    }
+
+    /**
+     * Initialize Swagger UI
+     * @private
+     */
+    private initializeSwagger() {
+        const storage = getMetadataArgsStorage()
+        const schemas = validationMetadatasToSchemas({
+            refPointerPrefix: '#/components/schemas/',
+        })
+
+        const spec = routingControllersToSpec(storage, {}, {
+            components: {schemas},
+            info: {title: 'Verifiable Data Registry Server API', version: '0.1.2'},
+        })
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
     }
 
     /**
