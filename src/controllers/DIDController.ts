@@ -15,17 +15,17 @@ import {DID} from "../models/entities/DID";
 export class DIDController {
 
     constructor(
-        private didService: DIDService
+        private readonly didService: DIDService
     ) {
     }
 
     /**
      * Get DID Document
      *
-     * @param id
+     * @param id decentralized identifier
      */
     @Get('/:id')
-    async getOneById(@Param('id') id: string) {
+    async getById(@Param('id') id: string) {
         const did = await this.didService.retrieve(id);
         Assert.notNull(did, `DID (${id}) does not exist.`);
         return this.didService.resolveDIDToDoc(<DID>did);

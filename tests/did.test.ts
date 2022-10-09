@@ -2,11 +2,12 @@ import {App} from "../src/app";
 import request from "supertest";
 import * as http from "http";
 import * as process from "process";
+import {env} from "../src/common/env";
 
 describe('DID GraphQL tests', () => {
 
     let server: http.Server;
-    const serverAddress = "http://localhost:8000";
+    const serverAddress = env.app.endpoint;
 
     before(() => {
         const app = new App();
@@ -20,19 +21,19 @@ describe('DID GraphQL tests', () => {
 
     it('should create DID', async () => {
         const method = "test";
-        const methodIdentifier = "0001";
+        const methodIdentifier = "0003";
 
         const mutationData = {
             query:
-                `mutation Mutation($did: CreateDIDReq!) {
-                      createDID(did: $did) {
+                `mutation CreateDID($createDidReq: CreateDIDReq!) {
+                    createDID(createDidReq: $createDidReq) {
                         did
                         authenticationPrivateKey
                         assertionMethodPrivateKey
-                      }
+                    }
                 }`,
             variables: `{
-                          "did": {
+                          "createDidReq": {
                             "method": "${method}",
                             "methodIdentifier": "${methodIdentifier}"
                           }
@@ -51,26 +52,26 @@ describe('DID GraphQL tests', () => {
         const did = "did:test:0001";
 
         const queryData = {
-            query: `query ResolveDID($resolveDidId: String!) {
-                      resolveDID(id: $resolveDidId) {
-                        id
-                        authentication
-                        context
-                        verificationMethod {
-                          id
-                          type
-                          controller
-                          publicKeyJwk {
-                            kty
-                            x
-                            y
-                            crv
-                          }
-                        }
+            query: `query Query($resolveDidToDocId: String!) {
+                        resolveDIDToDoc(id: $resolveDidToDocId) {
+                            id
+                            authentication
+                            context
+                            verificationMethod {
+                              id
+                              type
+                              controller
+                              publicKeyJwk {
+                                kty
+                                x
+                                y
+                                crv
+                              }
+                            }
                       }
                     }`,
             variables: `{
-                          "resolveDidId": "${did}"
+                          "resolveDidToDocId": "${did}"
                         }`
         };
 
