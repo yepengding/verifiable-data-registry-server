@@ -3,28 +3,30 @@
  *
  * @author Yepeng Ding
  */
+import {SystemError} from "../error-handling/SystemError";
+
 export class Assert {
-    public static notNull(object: unknown, message: string) {
+    public static notNull(object: unknown, httpCode: number, message: string) {
         if (object === null || object === undefined) {
-            throw Error(message);
+            throw new SystemError(httpCode, message);
         }
     }
 
-    public static isNull(object: unknown, message: string) {
+    public static isNull(object: unknown, httpCode: number, message: string) {
         if (object) {
-            throw Error(message);
+            throw new SystemError(httpCode, message);
         }
     }
 
-    public static isTrue(expression: boolean, message: string) {
+    public static isTrue(expression: boolean, httpCode: number, message: string) {
         if (!expression) {
-            throw Error(message);
+            throw new SystemError(httpCode, message);
         }
     }
 
-    public static isFalse(expression: boolean, message: string) {
+    public static isFalse(expression: boolean, httpCode: number, message: string) {
         if (expression) {
-            throw Error(message);
+            throw new SystemError(httpCode, message);
         }
     }
 }

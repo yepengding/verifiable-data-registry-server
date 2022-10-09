@@ -1,13 +1,16 @@
+/**
+ * Global Error Handler
+ *
+ * @author Yepeng Ding
+ */
 import {ExpressErrorMiddlewareInterface, HttpError, Middleware} from 'routing-controllers';
 import {Service} from "typedi";
 import {NextFunction, Request, Response} from "express";
 import {env} from "../env";
 import {logger} from "../../logger";
+import {SystemError} from "./SystemError";
+import {ErrResponse} from "../response/Response";
 
-type ErrResponse = {
-    message?: string,
-    stack?: string
-}
 
 type ValidationError = {
     target: object,
@@ -36,6 +39,9 @@ export class ErrorHandler implements ExpressErrorMiddlewareInterface {
                 response.status(error.httpCode);
                 errResponse.message = "Invalid HTTP request"
             }
+        } else if (error instanceof SystemError) {
+            response.status(error.getHttpCode());
+            errResponse.message = error.message;
         } else {
             if (error.message) {
                 errResponse.message = error.message;

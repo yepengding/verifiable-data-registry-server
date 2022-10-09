@@ -3,6 +3,7 @@ import {Service} from "typedi";
 import {Assert} from "../common/assertion/Assert";
 import {DIDService} from "../services/DIDService";
 import {DID} from "../models/entities/DID";
+import {HttpErrorCode} from "../common/error-handling/ErroCode";
 
 
 /**
@@ -27,7 +28,7 @@ export class DIDController {
     @Get('/:id')
     async getById(@Param('id') id: string) {
         const did = await this.didService.retrieve(id);
-        Assert.notNull(did, `DID (${id}) does not exist.`);
+        Assert.notNull(did, HttpErrorCode.NOT_FOUND, `DID (${id}) does not exist.`);
         return this.didService.resolveDIDToDoc(<DID>did);
     }
 

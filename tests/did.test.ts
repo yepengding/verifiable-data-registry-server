@@ -1,3 +1,8 @@
+/**
+ * DID-related test cases
+ *
+ * @author Yepeng Ding
+ */
 import {App} from "../src/app";
 import request from "supertest";
 import * as http from "http";

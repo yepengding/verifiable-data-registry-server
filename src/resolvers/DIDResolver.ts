@@ -6,6 +6,7 @@ import {DID} from "../models/entities/DID";
 import {Assert} from "../common/assertion/Assert";
 import * as jose from 'jose';
 import {Service} from "typedi";
+import {HttpErrorCode} from "../common/error-handling/ErroCode";
 
 /**
  * DID Resolver
@@ -33,7 +34,7 @@ export class DIDResolver {
     async createDID(@Arg('createDidReq', {description: "Decentralized identifier object"}) createDidReq: CreateDIDReq)
         : Promise<CreateDIDRes> {
         const id = this.didService.computeId(createDidReq.method, createDidReq.methodIdentifier);
-        Assert.isFalse(await this.didService.exists(id), `DID (${id}) exists.`);
+        Assert.isFalse(await this.didService.exists(id), HttpErrorCode.FORBIDDEN, `DID (${id}) exists.`);
 
         // Create authentication key (ES256 [P-256])
         const authAlgorithm = 'ES256';
@@ -58,7 +59,7 @@ export class DIDResolver {
     async resolveDIDToDoc(@Arg('id', {description: "Decentralized identifier"}) id: string)
         : Promise<DIDDoc> {
         const did = await this.didService.retrieve(id);
-        Assert.notNull(did, `DID (${id}) does not exist.`);
+        Assert.notNull(did, HttpErrorCode.FORBIDDEN, `DID (${id}) does not exist.`);
         return this.didService.resolveDIDToDoc(<DID>did);
     }
 
