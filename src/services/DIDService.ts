@@ -49,7 +49,7 @@ export class DIDService {
             id: this.computeId(method, methodIdentifier),
             authentication: authenticationKey.kid,
             assertionMethod: assertionPublicKey.kid,
-            verificationMethod: [authenticationKey],
+            verificationMethod: [authenticationKey, assertionPublicKey],
             method,
             methodIdentifier
         }
@@ -84,7 +84,7 @@ export class DIDService {
         const didDoc = new DIDDoc();
         didDoc.id = did.id;
         // Only one authentication is supported currently.
-        didDoc.authentication = [`${did.id}#${did.authentication}`];
+        didDoc.authentication = [`${did.id}/${did.authentication}`];
 
         didDoc.context = ContextUtil.defaultContextOfDID();
         didDoc.context.push(
@@ -101,7 +101,7 @@ export class DIDService {
         didDoc.verificationMethod = []
         for (const m of did.verificationMethod) {
             didDoc.verificationMethod.push({
-                id: `${did.id}#${m.kid}`,
+                id: `${did.id}/${m.kid}`,
                 type: "JsonWebKey2020",
                 controller: did.id,
                 publicKeyJwk: JSON.parse(m.jwk) as ES256PublicKey

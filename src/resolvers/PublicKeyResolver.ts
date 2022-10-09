@@ -3,6 +3,7 @@ import {PublicKeyService} from "../services/PublicKeyService";
 import {Assert} from "../common/assertion/Assert";
 import {Service} from "typedi";
 import {PublicKey} from "../models/entities/PublicKey";
+import {HttpErrorCode} from "../common/error-handling/ErroCode";
 
 /**
  * Public Key Resolver
@@ -23,7 +24,7 @@ export class PublicKeyResolver {
     })
     async resolvePublicKey(@Arg('kid') kid: string): Promise<PublicKey | null> {
         const pk = await this.publicKeyService.retrieve(kid);
-        Assert.notNull(pk, `Public Key (${kid}) does not exist.`);
+        Assert.notNull(pk, HttpErrorCode.NOT_FOUND, `Public Key (${kid}) does not exist.`);
         return pk;
     }
 

@@ -24,3 +24,12 @@ export class Response<T> {
     }
 
 }
+
+/**
+ * Error Response Encapsulation
+ *
+ */
+export class ErrResponse {
+    message?: string;
+    stack?: string;
+}

@@ -1,4 +1,9 @@
-import { expect } from "chai";
+/**
+ * Key-related test cases
+ *
+ * @author Yepeng Ding
+ */
+import {expect} from "chai";
 import * as jose from "jose";
 
 describe('Key tests', () => {
@@ -48,7 +53,7 @@ describe('Key tests', () => {
             .setProtectedHeader({alg: algorithm})
             .sign(iSk);
 
-        const {payload, protectedHeader} = await jose.compactVerify(jws, iPk);
+        const {payload} = await jose.compactVerify(jws, iPk);
 
         expect(text).equal(new TextDecoder().decode(payload));
     });

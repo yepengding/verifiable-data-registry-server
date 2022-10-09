@@ -6,6 +6,7 @@ import {DID} from "../models/entities/DID";
 import {Assert} from "../common/assertion/Assert";
 import * as jose from 'jose';
 import {Service} from "typedi";
+import {HttpErrorCode} from "../common/error-handling/ErroCode";
 
 /**
  * DID Resolver
@@ -22,23 +23,18 @@ export class DIDResolver {
     ) {
     }
 
-    @Query(() => DIDDoc, {
-        description: 'Resolve DID.',
-    })
-    async resolveDID(@Arg('id', {description: "Decentralized identifier"}) id: string)
-        : Promise<DIDDoc> {
-        const did = await this.didService.retrieve(id);
-        Assert.notNull(did, `DID (${id}) does not exist.`);
-        return this.didService.resolveDIDToDoc(<DID>did);
-    }
-
+    /**
+     * Create DID
+     *
+     * @param createDidReq
+     */
     @Mutation(() => CreateDIDRes, {
-        description: 'Create DID.',
+        description: 'Create decentralized identifier.',
     })
-    async createDID(@Arg('did', {description: "Decentralized identifier object"}) did: CreateDIDReq)
+    async createDID(@Arg('createDidReq', {description: "Decentralized identifier object"}) createDidReq: CreateDIDReq)
         : Promise<CreateDIDRes> {
-        const id = this.didService.computeId(did.method, did.methodIdentifier);
-        Assert.isFalse(await this.didService.exists(id), `DID (${id}) exists.`);
+        const id = this.didService.computeId(createDidReq.method, createDidReq.methodIdentifier);
+        Assert.isFalse(await this.didService.exists(id), HttpErrorCode.FORBIDDEN, `DID (${id}) exists.`);
 
         // Create authentication key (ES256 [P-256])
         const authAlgorithm = 'ES256';
@@ -51,10 +47,20 @@ export class DIDResolver {
         const assertionPublicKey = await this.publicKeyService.create(assertKey.publicKey, assertAlgorithm);
 
         return {
-            did: (await this.didService.create(did.method, did.methodIdentifier, authenticationPublicKey, assertionPublicKey)).id,
+            did: (await this.didService.create(createDidReq.method, createDidReq.methodIdentifier, authenticationPublicKey, assertionPublicKey)).id,
             authenticationPrivateKey: JSON.stringify(await jose.exportJWK(authKey.privateKey)),
             assertionMethodPrivateKey: JSON.stringify(await jose.exportJWK(assertKey.privateKey))
         };
+    }
+
+    @Query(() => DIDDoc, {
+        description: 'Resolve DID to DID document.',
+    })
+    async resolveDIDToDoc(@Arg('id', {description: "Decentralized identifier"}) id: string)
+        : Promise<DIDDoc> {
+        const did = await this.didService.retrieve(id);
+        Assert.notNull(did, HttpErrorCode.FORBIDDEN, `DID (${id}) does not exist.`);
+        return this.didService.resolveDIDToDoc(<DID>did);
     }
 
 }
