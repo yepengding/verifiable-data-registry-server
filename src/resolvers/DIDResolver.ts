@@ -7,6 +7,7 @@ import {Assert} from "../common/assertion/Assert";
 import * as jose from 'jose';
 import {Service} from "typedi";
 import {HttpErrorCode} from "../common/error-handling/ErroCode";
+import {Algorithm} from "../common/dictionary/Algorithm";
 
 /**
  * DID Resolver
@@ -37,12 +38,12 @@ export class DIDResolver {
         Assert.isFalse(await this.didService.exists(id), HttpErrorCode.FORBIDDEN, `DID (${id}) exists.`);
 
         // Create authentication key (ES256 [P-256])
-        const authAlgorithm = 'ES256';
+        const authAlgorithm = Algorithm.ES256;
         const authKey = await jose.generateKeyPair(authAlgorithm);
         const authenticationPublicKey = await this.publicKeyService.create(authKey.publicKey, authAlgorithm);
 
         // Create assertion key (EdDSA [Ed25519])
-        const assertAlgorithm = 'EdDSA';
+        const assertAlgorithm = Algorithm.EDDSA;
         const assertKey = await jose.generateKeyPair(assertAlgorithm, {crv: "Ed25519"});
         const assertionPublicKey = await this.publicKeyService.create(assertKey.publicKey, assertAlgorithm);
 

@@ -26,7 +26,7 @@ describe('DID GraphQL tests', () => {
 
     it('should create DID', async () => {
         const method = "test";
-        const methodIdentifier = "0003";
+        const methodIdentifier = "0001";
 
         const mutationData = {
             query:
@@ -67,10 +67,17 @@ describe('DID GraphQL tests', () => {
                               type
                               controller
                               publicKeyJwk {
-                                kty
-                                x
-                                y
-                                crv
+                                ... on ES256PublicKey {
+                                  kty
+                                  x
+                                  y
+                                  crv
+                                }
+                                ... on EDDSAPublicKey {
+                                  kty
+                                  x
+                                  crv
+                                }
                               }
                             }
                       }
