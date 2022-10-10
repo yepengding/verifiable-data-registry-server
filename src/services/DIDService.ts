@@ -4,7 +4,7 @@ import {DID} from "../models/entities/DID";
 import {PublicKey} from "../models/entities/PublicKey";
 import {DIDDoc} from "../models/dtos/DID.dto";
 import {ContextUtil} from "../util/ContextUtil";
-import {ES256PublicKey} from "../models/dtos/PublicKey.dto";
+import {PublicKeyDTOType} from "../models/dtos/PublicKey.dto";
 
 /**
  * Decentralized Identifier Service
@@ -97,16 +97,16 @@ export class DIDService {
                 .map(t => ContextUtil.contextOfKeyType(t))
         );
 
-        // Only JWK is supported currently
-        didDoc.verificationMethod = []
-        for (const m of did.verificationMethod) {
-            didDoc.verificationMethod.push({
-                id: `${did.id}/${m.kid}`,
-                type: "JsonWebKey2020",
-                controller: did.id,
-                publicKeyJwk: JSON.parse(m.jwk) as ES256PublicKey
+        // Only JWK is supported
+        didDoc.verificationMethod = did.verificationMethod
+            .map(m => {
+                return {
+                    id: `${did.id}/${m.kid}`,
+                        type: "JsonWebKey2020",
+                    controller: did.id,
+                    publicKeyJwk: JSON.parse(m.jwk) as PublicKeyDTOType
+                }
             })
-        }
 
         return didDoc;
     }

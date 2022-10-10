@@ -1,7 +1,7 @@
 import {DID} from "../entities/DID";
 import {Field, InputType, ObjectType} from "type-graphql";
 import {IsNotEmpty, MaxLength} from "class-validator";
-import {ES256PublicKey} from "./PublicKey.dto";
+import {PublicKeyDTO, PublicKeyDTOType} from "./PublicKey.dto";
 
 
 /**
@@ -55,8 +55,8 @@ export class VerificationMethod {
     @Field({description: "Key controller DID"})
     controller: string
 
-    @Field(() => ES256PublicKey, {description: "Public key in JWK form"})
-    publicKeyJwk: ES256PublicKey
+    @Field(() => PublicKeyDTO, {description: "Public key in JWK form"})
+    publicKeyJwk: PublicKeyDTOType
 }
 
 /**
